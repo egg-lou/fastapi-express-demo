@@ -4,4 +4,4 @@ fastapi/.venv
 fastapi/__pycache__
 fastapi/src/__pycache__
 express/db.sqlite
-fastapi/database.db
+fastapi/db.sqlite
