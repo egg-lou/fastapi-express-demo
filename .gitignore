@@ -2,4 +2,6 @@ express/bun.lockb
 express/node_modules
 fastapi/.venv
 fastapi/__pycache__
+fastapi/src/__pycache__
 express/db.sqlite
+fastapi/database.db
