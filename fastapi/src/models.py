@@ -13,3 +13,4 @@ class MovieIn(BaseModel):
 class Movie(MovieIn):
     id: int
     director: Director
+    directorId: int
