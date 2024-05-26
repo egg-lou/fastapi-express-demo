@@ -11,7 +11,7 @@ export class DirectorController {
     static async getDirectorById(id: number) {
         const db = await openDb()
         const director = await db.get("SELECT * FROM directors WHERE id = ?", id)
-        return new Director(director.id, director.name)
+        return director ? { id: director.id, name: director.name } : null
     }
 
     static async createDirector(name: string) {
