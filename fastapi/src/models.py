@@ -8,7 +8,8 @@ class Director(DirectorIn):
 
 class MovieIn(BaseModel):
     title: str
-    director: DirectorIn
+    directorId: int
 
 class Movie(MovieIn):
     id: int
+    director: Director

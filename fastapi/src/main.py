@@ -43,17 +43,21 @@ async def delete_movie(id: int):
 async def create_movie(movie: MovieIn):
     conn = open_db()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO movies (title, directorId) VALUES (?, ?)", (movie.title, movie.director.id))
+    cursor.execute("INSERT INTO movies (title, directorId) VALUES (?, ?)", (movie.title, movie.directorId))
     conn.commit()
-    return {"id": cursor.lastrowid, "title": movie.title, "director": movie.director}
+    cursor.execute("SELECT * FROM directors WHERE id = ?", (movie.directorId,))
+    director = cursor.fetchone()
+    return {"id": cursor.lastrowid, "title": movie.title, "director": {"id": director[0], "name": director[1]}}
 
 @app.put("/movies/{id}", response_model=Movie)
 async def update_movie(id: int, movie: MovieIn):
     conn = open_db()
     cursor = conn.cursor()
-    cursor.execute("UPDATE movies SET title = ?, directorId = ? WHERE id = ?", (movie.title, movie.director.id, id))
+    cursor.execute("UPDATE movies SET title = ?, directorId = ? WHERE id = ?", (movie.title, movie.directorId, id))
     conn.commit()
-    return {"id": id, "title": movie.title, "director": movie.director}
+    cursor.execute("SELECT * FROM directors WHERE id = ?", (movie.directorId,))
+    director = cursor.fetchone()
+    return {"id": id, "title": movie.title, "director": {"id": director[0], "name": director[1]}}
 
 @app.get("/directors", response_model=List[Director])
 async def get_all_directors():
